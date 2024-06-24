@@ -27,7 +27,8 @@ public class UserServlet extends HttpServlet {
             return;
         }
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr, formato);
+        LocalDate localDate = LocalDate.parse(fechaNacimientoStr, formato);
+        Date fechaNacimiento = Date.valueOf(localDate); //
         String pais = request.getParameter("pais");
 
         User user = new User(nombre, email, apellido, password, fechaNacimiento, pais);
