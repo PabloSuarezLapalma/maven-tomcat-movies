@@ -8,13 +8,13 @@
          version="3.0">
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
-    <servlet-name>MyServlet</servlet-name>
-    <servlet-class>com.example.MyServlet</servlet-class>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>com.ar.apimovies.UserServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>MyServlet</servlet-name>
-    <url-pattern>/hello</url-pattern>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/api/users</url-pattern>
   </servlet-mapping>
 
 
