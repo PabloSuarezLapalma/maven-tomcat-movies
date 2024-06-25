@@ -1,11 +1,10 @@
-package com.ar.apimovies;
+package com.ar.apimovies.dao;
+import com.ar.apimovies.database.DatabaseConnection;
 import com.ar.apimovies.model.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
     public Long insertUser(User user) {
@@ -47,7 +46,7 @@ public class UserDAO {
         return userId;
     }
     public void printUsers() {
-        String query = "SELECT id, nombre, clave FROM usuarios";
+        String query = "SELECT id, nombre, password FROM usuarios";
         DatabaseConnection conexion = new DatabaseConnection();
         Statement stm = null;
         ResultSet rs = null;
@@ -77,5 +76,46 @@ public class UserDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM usuarios";
+        DatabaseConnection conexion = new DatabaseConnection();
+        Statement stm = null;
+        ResultSet rs = null;
+        Connection cn = null;
+
+        try {
+            cn = conexion.conectar();
+            stm = cn.createStatement();
+            rs = stm.executeQuery(query);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String email = rs.getString("email");
+                String apellido = rs.getString("apellido");
+                String password = rs.getString("password");
+                Date fechaNacimiento = rs.getDate("fechaNacimiento");
+                String pais = rs.getString("pais");
+
+                User user = new User(nombre, email, apellido, password, fechaNacimiento, pais);
+                user.setId(id);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stm != null) stm.close();
+                if (cn != null) cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return users;
     }
 }

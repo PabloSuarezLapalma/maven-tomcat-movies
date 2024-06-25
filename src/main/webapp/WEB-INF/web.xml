@@ -9,7 +9,7 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>UserServlet</servlet-name>
-    <servlet-class>com.ar.apimovies.UserServlet</servlet-class>
+    <servlet-class>com.ar.apimovies.servlets.UserServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
