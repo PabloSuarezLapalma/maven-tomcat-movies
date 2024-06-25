@@ -118,4 +118,61 @@ public class UserDAO {
         }
         return users;
     }
+
+    public int deleteUser(int userId) {
+        String query = "DELETE FROM usuarios WHERE id = ?";
+        DatabaseConnection conexion = new DatabaseConnection();
+        PreparedStatement pstm = null;
+        Connection cn = null;
+        int rowsAffected = 0;
+
+        try {
+            cn = conexion.conectar();
+            pstm = cn.prepareStatement(query);
+            pstm.setInt(1, userId);
+            rowsAffected = pstm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstm != null) pstm.close();
+                if (cn != null) cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return rowsAffected;
+    }
+
+    public int updateUser(User user) {
+        String query = "UPDATE usuarios SET nombre = ?, email = ?, apellido = ?, password = ?, fechaNacimiento = ?, pais = ? WHERE id = ?";
+        DatabaseConnection conexion = new DatabaseConnection();
+        PreparedStatement pstm = null;
+        Connection cn = null;
+        int rowsAffected = 0;
+
+        try {
+            cn = conexion.conectar();
+            pstm = cn.prepareStatement(query);
+            pstm.setString(1, user.getNombre());
+            pstm.setString(2, user.getEmail());
+            pstm.setString(3, user.getApellido());
+            pstm.setString(4, user.getPassword());
+            pstm.setDate(5, new java.sql.Date(user.getFechaNacimiento().getTime()));
+            pstm.setString(6, user.getPais());
+            pstm.setInt(7, user.getId());
+            rowsAffected = pstm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+    }
+        finally {
+            try {
+                if (pstm != null) pstm.close();
+                if (cn != null) cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return rowsAffected;
+    }
 }

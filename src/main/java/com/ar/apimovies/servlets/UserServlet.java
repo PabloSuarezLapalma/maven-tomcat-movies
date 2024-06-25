@@ -60,4 +60,67 @@ public class UserServlet extends HttpServlet {
 
         response.getWriter().write("Usuario agregado exitosamente");
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Implementación del método DELETE para manejar la eliminación de usuario
+        String userIdStr = request.getParameter("id");
+        if (userIdStr == null || userIdStr.isEmpty()) {
+            // Manejar el caso cuando el ID del usuario no está presente
+            response.getWriter().write("ID de usuario no proporcionado");
+            return;
+        }
+        int userId = Integer.parseInt(userIdStr);
+        UserDAO userDAO = new UserDAO();
+        int result= userDAO.deleteUser(userId);
+        if (result == 0) {
+            // Manejar el caso cuando el usuario no se pudo eliminar
+            response.getWriter().write("No se pudo eliminar el usuario");
+            return;
+        }
+        else {
+            // Manejar el caso cuando el usuario se eliminó exitosamente
+            response.getWriter().write("Usuario eliminado exitosamente");
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Implementación del método PUT para manejar la actualización de usuario
+        String userIdStr = request.getParameter("id");
+        if (userIdStr == null || userIdStr.isEmpty()) {
+            // Manejar el caso cuando el ID del usuario no está presente
+            response.getWriter().write("ID de usuario no proporcionado");
+            return;
+        }
+        int userId = Integer.parseInt(userIdStr);
+        String nombre = request.getParameter("nombre");
+        String email = request.getParameter("email");
+        String apellido = request.getParameter("apellido");
+        String password = request.getParameter("password");
+        String fechaNacimientoStr = request.getParameter("fechaNacimiento");
+        if (fechaNacimientoStr == null || fechaNacimientoStr.isEmpty()) {
+            // Manejar el caso cuando fechaNacimiento no está presente
+            response.getWriter().write("Fecha de nacimiento no proporcionada");
+            return;
+        }
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(fechaNacimientoStr, formato);
+        Date fechaNacimiento = Date.valueOf(localDate);
+        String pais = request.getParameter("pais");
+
+        User user = new User(nombre, email, apellido, password, fechaNacimiento, pais);
+        user.setId(userId);
+        UserDAO userDAO = new UserDAO();
+        int result = userDAO.updateUser(user);
+        if (result == 0) {
+            // Manejar el caso cuando el usuario no se pudo actualizar
+            response.getWriter().write("No se pudo actualizar el usuario");
+            return;
+        }
+        else {
+            // Manejar el caso cuando el usuario se actualizó exitosamente
+            response.getWriter().write("Usuario actualizado exitosamente");
+        }
+    }
 }
