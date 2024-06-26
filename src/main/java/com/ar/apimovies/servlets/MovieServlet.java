@@ -26,6 +26,7 @@ public class MovieServlet extends HttpServlet {
         String json = gson.toJson(movies);
 
         resp.getWriter().write(json);
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,6 +47,8 @@ public class MovieServlet extends HttpServlet {
         Long movieId = movieDAO.insertMovie(movie);
 
         resp.getWriter().write("Película agregada exitosamente");
+        resp.setStatus(HttpServletResponse.SC_CREATED);
+
     }
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,14 +64,20 @@ public class MovieServlet extends HttpServlet {
         MovieDAO movieDAO = new MovieDAO();
         if (id == null || id.isEmpty()) {
             resp.getWriter().write("ID de película no proporcionada");
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
             return;
         }
         int result =  movieDAO.deleteMovie(Integer.parseInt(id));
         if (result == 0) {
             resp.getWriter().write("No se pudo eliminar la película");
+            resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+
         }
         else {
             resp.getWriter().write("Película eliminada exitosamente");
+            resp.setStatus(HttpServletResponse.SC_OK);
+
         }
     }
     @Override
@@ -96,9 +105,13 @@ public class MovieServlet extends HttpServlet {
         int result =  movieDAO.updateMovie(movie);
         if (result == 0) {
             resp.getWriter().write("No se pudo actualizar la película");
+            resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+
         }
         else {
             resp.getWriter().write("Película actualizada exitosamente");
+            resp.setStatus(HttpServletResponse.SC_OK);
+
         }
     }
 }

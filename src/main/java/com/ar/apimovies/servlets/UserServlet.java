@@ -32,6 +32,8 @@ public class UserServlet extends HttpServlet {
         String usersJson = gson.toJson(users);
 
         response.getWriter().write(usersJson);
+        response.setStatus(HttpServletResponse.SC_OK);
+
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,6 +52,7 @@ public class UserServlet extends HttpServlet {
         String fechaNacimientoStr = request.getParameter("fechaNacimiento");
         if (fechaNacimientoStr == null || fechaNacimientoStr.isEmpty()) {
             response.getWriter().write("Fecha de nacimiento no proporcionada");
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             return;
         }
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -61,6 +64,7 @@ public class UserServlet extends HttpServlet {
         userDAO.insertUser(user);
 
         response.getWriter().write("Usuario agregado exitosamente");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
@@ -76,6 +80,7 @@ public class UserServlet extends HttpServlet {
         String userIdStr = request.getParameter("id");
         if (userIdStr == null || userIdStr.isEmpty()) {
             response.getWriter().write("ID de usuario no proporcionado");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
         int userId = Integer.parseInt(userIdStr);
@@ -83,9 +88,11 @@ public class UserServlet extends HttpServlet {
         int result= userDAO.deleteUser(userId);
         if (result == 0) {
             response.getWriter().write("No se pudo eliminar el usuario");
+            response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
         }
         else {
             response.getWriter().write("Usuario eliminado exitosamente");
+            response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 
@@ -102,6 +109,7 @@ public class UserServlet extends HttpServlet {
         String userIdStr = request.getParameter("id");
         if (userIdStr == null || userIdStr.isEmpty()) {
             response.getWriter().write("ID de usuario no proporcionado");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
         int userId = Integer.parseInt(userIdStr);
@@ -124,9 +132,11 @@ public class UserServlet extends HttpServlet {
         int result = userDAO.updateUser(user);
         if (result == 0) {
             response.getWriter().write("No se pudo actualizar el usuario");
+            response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
         }
         else {
             response.getWriter().write("Usuario actualizado exitosamente");
+            response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 }
