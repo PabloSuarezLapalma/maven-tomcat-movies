@@ -18,16 +18,31 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
         UserDAO userDAO = new UserDAO();
         List<User> users = userDAO.getAllUsers();
         Gson gson = new Gson();
         String usersJson = gson.toJson(users);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+
         response.getWriter().write(usersJson);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
         String nombre = request.getParameter("nombre");
         String email = request.getParameter("email");
         String apellido = request.getParameter("apellido");
@@ -44,11 +59,20 @@ public class UserServlet extends HttpServlet {
         User user = new User(nombre, email, apellido, password, fechaNacimiento, pais);
         UserDAO userDAO = new UserDAO();
         userDAO.insertUser(user);
+
         response.getWriter().write("Usuario agregado exitosamente");
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
         String userIdStr = request.getParameter("id");
         if (userIdStr == null || userIdStr.isEmpty()) {
             response.getWriter().write("ID de usuario no proporcionado");
@@ -67,6 +91,14 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
         String userIdStr = request.getParameter("id");
         if (userIdStr == null || userIdStr.isEmpty()) {
             response.getWriter().write("ID de usuario no proporcionado");

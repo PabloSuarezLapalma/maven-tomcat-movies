@@ -12,16 +12,31 @@ import java.util.List;
 public class MovieServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "*");
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
         MovieDAO movieDAO = new MovieDAO();
         List<Movie> movies = movieDAO.getAllMovies();
         Gson gson = new Gson();
         String json = gson.toJson(movies);
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
+
         resp.getWriter().write(json);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "*");
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
         String titulo = req.getParameter("titulo");
         Integer duracion = Integer.parseInt(req.getParameter("duracion"));
         String genero = req.getParameter("genero");
@@ -29,10 +44,19 @@ public class MovieServlet extends HttpServlet {
         Movie movie = new Movie(titulo, duracion, genero, imagen);
         MovieDAO movieDAO = new MovieDAO();
         Long movieId = movieDAO.insertMovie(movie);
+
         resp.getWriter().write("Película agregada exitosamente");
     }
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "*");
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
         String id = req.getParameter("id");
         MovieDAO movieDAO = new MovieDAO();
         if (id == null || id.isEmpty()) {
@@ -49,6 +73,14 @@ public class MovieServlet extends HttpServlet {
     }
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "*");
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
         String id = req.getParameter("id");
         if (id == null || id.isEmpty()) {
             resp.getWriter().write("ID de película no proporcionada");
