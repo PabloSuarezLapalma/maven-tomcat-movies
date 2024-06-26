@@ -7,14 +7,14 @@ import java.util.List;
 public class MovieDAO {
     public Long insertMovie(Movie movie) {
         String insertMovie = "INSERT INTO peliculas (titulo, duracion, genero, imagen) VALUES (?, ?, ?, ?)";
-        DatabaseConnection connection = new DatabaseConnection();
+        DatabaseConnection conexion = new DatabaseConnection();
 
         Statement stm = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Long movieId = null;
 
-        Connection cn = connection.conectar();
+        Connection cn = conexion.conectar();
         try {
             pstm = cn.prepareStatement(insertMovie);
 
@@ -48,13 +48,13 @@ public class MovieDAO {
     }
     public List<Movie> getAllMovies() {
         String query = "SELECT id, titulo, duracion, genero, imagen FROM peliculas";
-        DatabaseConnection connection = new DatabaseConnection();
+        DatabaseConnection conexion = new DatabaseConnection();
         Statement stm = null;
         ResultSet rs = null;
         Connection cn = null;
         List<Movie> movies = new ArrayList<>();
         try {
-            cn = connection.conectar();
+            cn = conexion.conectar();
             stm = cn.createStatement();
             rs = stm.executeQuery(query);
             while (rs.next()) {
@@ -82,12 +82,12 @@ public class MovieDAO {
     }
     public int deleteMovie(int movieId) {
         String deleteMovie = "DELETE FROM peliculas WHERE id = ?";
-        DatabaseConnection connection = new DatabaseConnection();
+        DatabaseConnection conexion = new DatabaseConnection();
         PreparedStatement pstm = null;
         Connection cn = null;
         int result = 0;
         try {
-            cn = connection.conectar();
+            cn = conexion.conectar();
             pstm = cn.prepareStatement(deleteMovie);
             pstm.setInt(1, movieId);
             result = pstm.executeUpdate();
@@ -105,12 +105,12 @@ public class MovieDAO {
     }
     public int updateMovie(Movie movie) {
         String updateMovie = "UPDATE peliculas SET titulo = ?, duracion = ?, genero = ?, imagen = ? WHERE id = ?";
-        DatabaseConnection connection = new DatabaseConnection();
+        DatabaseConnection conexion = new DatabaseConnection();
         PreparedStatement pstm = null;
         Connection cn = null;
         int result = 0;
         try {
-            cn = connection.conectar();
+            cn = conexion.conectar();
             pstm = cn.prepareStatement(updateMovie);
             pstm.setString(1, movie.getTitulo());
             pstm.setInt(2, movie.getDuracion());
