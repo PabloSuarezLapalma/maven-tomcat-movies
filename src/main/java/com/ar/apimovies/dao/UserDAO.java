@@ -28,10 +28,14 @@ public class UserDAO {
             pstm.setDate(6, new java.sql.Date(user.getFechaNacimiento().getTime()));
 
            int response= pstm.executeUpdate();
-            rs = pstm.getGeneratedKeys();
-            if (rs.next()) {
-                userId = rs.getLong(1);
-            }
+           if(response>0){
+               rs = pstm.getGeneratedKeys();
+               if (rs.next()) {
+                   userId = rs.getLong(1);
+               }}
+           else {
+                   userId = 0L;
+               }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

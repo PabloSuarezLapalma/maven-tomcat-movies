@@ -23,10 +23,15 @@ public class MovieDAO {
             pstm.setString(3, movie.getGenero());
             pstm.setString(4, movie.getImagen());
 
-            int response = pstm.executeUpdate();
-            rs = pstm.getGeneratedKeys();
-            if (rs.next()) {
-                movieId = rs.getLong(1);
+            int result = pstm.executeUpdate();
+            if (result>0) {
+                rs = pstm.getGeneratedKeys();
+                if (rs.next()) {
+                    movieId = rs.getLong(1);
+                }
+            }
+            else {
+                movieId = 0L;
             }
         } catch (SQLException e) {
             e.printStackTrace();
