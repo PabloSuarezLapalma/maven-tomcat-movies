@@ -45,40 +45,6 @@ public class UserDAO {
         }
         return userId;
     }
-    public void printUsers() {
-        String query = "SELECT id, nombre, password FROM usuarios";
-        DatabaseConnection conexion = new DatabaseConnection();
-        Statement stm = null;
-        ResultSet rs = null;
-        Connection cn = null;
-
-        try {
-            cn = conexion.conectar();
-            stm = cn.createStatement();
-            rs = stm.executeQuery(query);
-
-            System.out.println("id - nombre - contraseña");
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("nombre");
-                String pass = rs.getString("password");
-
-                System.out.println(id + " - " + name + " - " + pass);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stm != null) stm.close();
-                if (cn != null) cn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM usuarios";

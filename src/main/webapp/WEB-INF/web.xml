@@ -11,11 +11,20 @@
     <servlet-name>UserServlet</servlet-name>
     <servlet-class>com.ar.apimovies.servlets.UserServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>MovieServlet</servlet-name>
+    <servlet-class>com.ar.apimovies.servlets.MovieServlet</servlet-class>
+  </servlet>
+
 
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
-    <url-pattern>/api/users</url-pattern>
+    <url-pattern>/users</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>MovieServlet</servlet-name>
+    <url-pattern>/movies</url-pattern>
+  </servlet-mapping>
 
 </web-app>
