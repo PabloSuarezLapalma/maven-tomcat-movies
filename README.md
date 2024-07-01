@@ -12,7 +12,7 @@ Integrantes:
 6. Pablo, Suárez Lapalma
 
 ## Descripción
-Este repositorio es donde se aloja el backend en Java del proyecto de gestión de películas realizado en el curso de Codo a Codo en el primer cuatrimestre de 2024. Este backend brinda endpoints a los cuales poder realizar las peticiones GET,PUT,POST y DELETE, conectándose a una base de datos de tipo MySQL.
+Este repositorio contiene el backend en Java del proyecto de gestión de películas realizado en el curso de Codo a Codo en el primer cuatrimestre de 2024. Este backend brinda endpoints a los cuales poder realizar las peticiones GET,PUT,POST y DELETE, conectándose a una base de datos de tipo MySQL.
 
 ## Instalación
 Existen dos formas de ejecutar este proyecto.
