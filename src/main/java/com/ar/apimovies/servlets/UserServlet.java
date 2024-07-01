@@ -2,8 +2,7 @@ package com.ar.apimovies.servlets;
 
 import com.ar.apimovies.dao.UserDAO;
 import com.ar.apimovies.model.User;
-import com.google.gson.Gson;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 
 public class UserServlet extends HttpServlet {
     @Override
@@ -28,8 +26,8 @@ public class UserServlet extends HttpServlet {
 
         UserDAO userDAO = new UserDAO();
         List<User> users = userDAO.getAllUsers();
-        Gson gson = new Gson();
-        String usersJson = gson.toJson(users);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String usersJson = objectMapper.writeValueAsString(users);
 
         response.getWriter().write(usersJson);
         response.setStatus(HttpServletResponse.SC_OK);

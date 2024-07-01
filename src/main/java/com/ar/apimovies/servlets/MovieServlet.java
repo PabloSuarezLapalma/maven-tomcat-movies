@@ -1,7 +1,7 @@
 package com.ar.apimovies.servlets;
 import com.ar.apimovies.dao.MovieDAO;
 import com.ar.apimovies.model.Movie;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +22,8 @@ public class MovieServlet extends HttpServlet {
 
         MovieDAO movieDAO = new MovieDAO();
         List<Movie> movies = movieDAO.getAllMovies();
-        Gson gson = new Gson();
-        String json = gson.toJson(movies);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(movies);
 
         resp.getWriter().write(json);
         resp.setStatus(HttpServletResponse.SC_OK);
