@@ -1,6 +1,6 @@
 # Maven-Tomcat-Movies
 
-## Grupo 2 del curo Codo a Codo, comisión 24103
+## Grupo 2 del curso Codo a Codo. Comisión 24103
 
 Integrantes:
 
