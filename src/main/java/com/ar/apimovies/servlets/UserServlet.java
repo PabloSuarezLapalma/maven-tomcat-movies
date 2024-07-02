@@ -21,9 +21,17 @@ public class UserServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
+        String username = request.getParameter("nombre");
         UserDAO userDAO = new UserDAO();
         List<User> users = userDAO.getAllUsers();
         ObjectMapper objectMapper = new ObjectMapper();
+
+        if (username != null && !username.isEmpty()) {
+            users = userDAO.getUsersByName(username);
+        } else {
+            users = userDAO.getAllUsers();
+        }
+
         String usersJson = objectMapper.writeValueAsString(users);
 
         response.getWriter().write(usersJson);

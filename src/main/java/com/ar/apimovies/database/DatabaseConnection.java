@@ -7,6 +7,7 @@ public class DatabaseConnection {
 
     // En caso de ser necesario cambiar la URL de conexión, así como el usuario y contraseña
     private static final String URL = "jdbc:mysql://localhost:3306/moviescac";
+	
     private static final String USER = "root";
     private static final String PASS = "root";
 

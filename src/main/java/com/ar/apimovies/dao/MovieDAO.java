@@ -80,6 +80,31 @@ public class MovieDAO {
         }
         return movies;
     }
+
+    public List<Movie> getMoviesByTitle(String title) {
+        List<Movie> movies = new ArrayList<>();
+        DatabaseConnection conexion = new DatabaseConnection();
+        String query = "SELECT id, titulo, duracion, genero, imagen FROM peliculas WHERE titulo LIKE ?";
+        try (Connection cn = conexion.conectar();
+             PreparedStatement pstm = cn.prepareStatement(query)) {
+
+            pstm.setString(1, "%" + title + "%");
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Movie movie = new Movie();
+                movie.setId(rs.getInt("id"));
+                movie.setTitulo(rs.getString("titulo"));
+                movie.setDuracion(rs.getInt("duracion"));
+                movie.setGenero(rs.getString("genero"));
+                movie.setImagen(rs.getString("imagen"));
+                movies.add(movie);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
     public int deleteMovie(int movieId) {
         String deleteMovie = "DELETE FROM peliculas WHERE id = ?";
         DatabaseConnection conexion = new DatabaseConnection();

@@ -88,7 +88,46 @@ public class UserDAO {
         }
         return users;
     }
+    public List<User> getUsersByName(String name) {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM usuarios WHERE nombre LIKE ?";
+        DatabaseConnection conexion = new DatabaseConnection();
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection cn = null;
 
+        try {
+            cn = conexion.conectar();
+            pstm = cn.prepareStatement(query);
+            pstm.setString(1, "%" + name + "%");
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String email = rs.getString("email");
+                String apellido = rs.getString("apellido");
+                String password = rs.getString("password");
+                Date fechaNacimiento = rs.getDate("fechaNacimiento");
+                String pais = rs.getString("pais");
+
+                User user = new User(nombre, email, apellido, password, fechaNacimiento, pais);
+                user.setId(id);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstm != null) pstm.close();
+                if (cn != null) cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return users;
+    }
     public int deleteUser(int userId) {
         String query = "DELETE FROM usuarios WHERE id = ?";
         DatabaseConnection conexion = new DatabaseConnection();

@@ -17,13 +17,20 @@ public class MovieServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
 
+        String movieName = req.getParameter("titulo");
         MovieDAO movieDAO = new MovieDAO();
-        List<Movie> movies = movieDAO.getAllMovies();
+        List<Movie> movies;
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(movies);
+        String json;
 
+        if (movieName != null && !movieName.isEmpty()) {
+            movies = movieDAO.getMoviesByTitle(movieName);
+        } else {
+            movies = movieDAO.getAllMovies();
+        }
+
+        json = objectMapper.writeValueAsString(movies);
         resp.getWriter().write(json);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
