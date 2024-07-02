@@ -18,7 +18,7 @@ public class UserDAO {
 
         Connection cn = conexion.conectar();
         try{
-            pstm=cn.prepareStatement(insertarUsuario);
+            pstm = cn.prepareStatement(insertarUsuario, Statement.RETURN_GENERATED_KEYS);
 
             pstm.setString(1, user.getNombre());
             pstm.setString(2, user.getEmail());
